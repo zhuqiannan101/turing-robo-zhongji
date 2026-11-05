@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🧩 RoboRAVE 中级组 · 刷题闯关</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft YaHei",sans-serif}
+body{background:#f5f6fa;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-bottom:50px}
+.hero{width:100%;padding:26px 16px 20px;text-align:center;color:#fff;
+ background:linear-gradient(135deg,#AB47BC,#7C3AED);border-radius:0 0 30px 30px}
+.hero h1{font-size:30px;margin-bottom:6px}
+.hero p{opacity:.92;font-size:15px}
+.coinbar{position:fixed;top:14px;right:14px;z-index:99;background:#fff;border-radius:999px;padding:8px 18px 8px 12px;
+ box-shadow:0 4px 14px rgba(0,0,0,.18);display:flex;align-items:center;gap:7px;font-weight:bold;font-size:19px;color:#b8860b}
+.coin{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#ffe082,#f9a825 70%);border:2.5px solid #f57f17;
+ color:#a05c00;font-size:15px;font-weight:bold}
+.coinbar.bump{animation:bump .4s}
+@keyframes bump{30%{transform:scale(1.18)}}
+.sndbtn{position:fixed;top:14px;left:14px;z-index:99;width:44px;height:44px;border-radius:50%;border:none;
+ background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:pointer;font-size:19px}
+.menu{display:flex;gap:16px;margin:0 16px 20px;flex-wrap:wrap;justify-content:center;position:relative;z-index:5}
+.mode{background:#fff;border-radius:20px;padding:20px 24px;cursor:pointer;box-shadow:0 5px 16px rgba(0,0,0,.1);
+ text-align:center;min-width:170px;transition:.15s;border:3px solid transparent}
+.mode:hover{transform:translateY(-4px);border-color:#AB47BC}
+.mode .ic{font-size:40px}.mode .t{font-size:19px;font-weight:bold;margin:6px 0 3px}.mode .d{font-size:13px;color:#888}
+.namecard{background:#fff;border-radius:20px;box-shadow:0 5px 16px rgba(0,0,0,.1);
+ margin:0 16px 24px;padding:22px 24px;position:relative;z-index:5;width:min(960px,94vw)}
+.namecard .ntitle{font-weight:bold;font-size:16.5px;margin-bottom:14px;color:#444;text-align:center}
+.namearea{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
+.namearea input{border:3px solid #AB47BC;border-radius:14px;padding:12px 18px;font-size:18px;font-weight:bold;
+ width:220px;text-align:center;outline:none;font-family:inherit}
+.namearea button{border:none;border-radius:14px;padding:12px 24px;font-size:16.5px;font-weight:bold;cursor:pointer;
+ color:#fff;background:linear-gradient(135deg,#AB47BC,#7C3AED)}
+.nametag{display:inline-flex;align-items:center;gap:8px;background:#fff;border-radius:999px;
+ padding:10px 22px;box-shadow:0 4px 14px rgba(0,0,0,.12);font-size:18px;font-weight:bold;color:#AB47BC;cursor:pointer}
+.card{background:#fff;width:min(960px,94vw);border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.08);
+ padding:22px 24px;margin-bottom:20px}
+.topbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.plate{color:#fff;border-radius:999px;padding:5px 14px;font-size:14px;font-weight:bold}
+.idx{color:#666;font-size:14.5px;font-weight:bold}
+.qimg{width:100%;border-radius:14px;border:1px solid #eee}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.opt{border:3px solid #e3e6ec;border-radius:16px;background:#fafbfd;cursor:pointer;transition:.12s;
+ padding:16px;font-size:17px;font-weight:bold;color:#444;text-align:center}
+.opt:hover:not(:disabled){border-color:#AB47BC;transform:translateY(-3px)}
+.opt.ok{background:#e6f7e9;border-color:#3cb371;color:#1d7a44}
+.opt.bad{background:#fdeaea;border-color:#e05252;color:#b03030}
+.opt:disabled{cursor:default}
+.fb{margin-top:16px;border-radius:14px;padding:13px 17px;font-size:16px;font-weight:bold;display:none;position:relative}
+.fb.ok{display:block;background:#e6f7e9;color:#1d7a44}
+.fb.bad{display:block;background:#fdeaea;color:#b03030}
+.combo{display:inline-block;background:#ff9800;color:#fff;border-radius:999px;padding:2px 12px;font-size:13px;margin-left:8px}
+.coinfly{position:absolute;right:18px;top:-10px;font-size:22px;font-weight:bold;color:#f9a825;
+ animation:flyup 1.1s ease-out forwards}
+@keyframes flyup{0%{opacity:0;transform:translateY(14px) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translateY(-44px) scale(1.25)}}
+.acts{margin-top:16px;display:none;gap:14px;flex-wrap:wrap}
+.btn{border:none;border-radius:999px;padding:14px 30px;font-size:17px;font-weight:bold;cursor:pointer;color:#fff;
+ background:linear-gradient(135deg,#AB47BC,#7C3AED)}
+.btn.ghost{background:#fff;color:#AB47BC;border:2.5px solid #AB47BC}
+.aimg{width:100%;border-radius:14px;border:1px solid #eee;margin-top:12px}
+.point{display:inline-block;margin-top:14px;background:#AB47BC15;color:#AB47BC;border-radius:999px;
+ padding:8px 18px;font-size:15px;font-weight:bold}
+.stat{display:flex;gap:16px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.stat div{background:#f8f9fc;border-radius:18px;padding:16px 30px;text-align:center}
+.stat b{font-size:34px}
+.hidden{display:none!important}
+.home-ic{position:fixed;left:16px;bottom:16px;width:50px;height:50px;border-radius:50%;border:none;background:#AB47BC;
+ color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2)}
+h2.res{font-size:30px;text-align:center;margin-bottom:2px}
+.coingift{margin:18px auto 0;background:linear-gradient(135deg,#fff8e1,#ffecb3);border:3px dashed #f9a825;
+ border-radius:22px;padding:22px 20px;text-align:center;max-width:560px}
+.coingift .num{font-size:46px;font-weight:bold;color:#e65100}
+.coingift .say{font-size:18px;font-weight:bold;color:#6d4c00;margin-top:6px;line-height:1.7}
+.confetti{position:fixed;top:-16px;z-index:98;border-radius:3px;animation:drop linear forwards}
+@keyframes drop{to{transform:translateY(108vh) rotate(720deg);opacity:.7}}
+</style></head><body>
+<div class="hero"><h1>🧩 RoboRAVE 中级组 · 刷题闯关</h1><p>答对就拿金币 · 集满找课导老师兑换！</p></div>
+<button class="sndbtn" id="snd" onclick="toggleSnd()">🔊</button>
+<div class="coinbar" id="coinbar"><span class="coin">★</span><span id="coinN">0</span><span style="font-size:13px;color:#999">枚金币</span></div>
+<div id="home">
+ <div class="namecard"><div class="ntitle">✏️ 先写下你的名字</div>
+  <div class="namearea" id="nameArea"></div></div>
+ <div class="menu">
+  <div class="mode" onclick="start('rand15')"><div class="ic">🎮</div><div class="t">开始闯关！</div><div class="d">随机 15 题 · 每题 3 金币</div></div>
+  <div class="mode" onclick="start('wrong')"><div class="ic">🔁</div><div class="t">错题大作战</div><div class="d">把错题变成金币！</div></div>
+ </div>
+ <div class="card">
+  <div style="text-align:center;font-weight:bold;font-size:17px;margin-bottom:10px">🎁 玩法说明</div>
+  <div style="color:#555;font-size:14.5px;line-height:2">
+  ① 每次闯关随机出 <b>15 道题</b>（单选选 ABCD，判断选「正确/错误」）；<br>
+  ② 答对一题 <b>奖励 3 枚金币</b>🪙，连对触发双杀、三杀播报！<br>
+  ③ 答错了也没关系，点【看解析】弄懂它，下次再战；<br>
+  ④ 刷完 15 题，记得 <b style="color:#e65100">截图找练习课导老师领取金币</b> 哦！
+  </div>
+ </div>
+ <div class="card"><div style="font-weight:bold;margin-bottom:8px">📊 我的战绩</div><div id="prog"></div></div>
+</div>
+<div id="quiz" class="hidden">
+ <div class="card">
+  <div class="topbar"><span class="plate" id="pPlate"></span><span class="idx" id="pIdx"></span></div>
+  <img class="qimg" id="qImg" alt="题目">
+  <div class="opts" id="opts"></div>
+  <div class="fb" id="fb"></div>
+  <div class="acts" id="acts">
+    <button class="btn ghost" onclick="showAns()">📖 看解析</button>
+    <button class="btn" onclick="next()">下一题 →</button>
+  </div>
+ </div>
+</div>
+<div id="ans" class="hidden">
+ <div class="card">
+  <div class="topbar"><span class="plate" id="aPlate"></span><span class="idx" id="aIdx"></span></div>
+  <img class="aimg" id="aImg" alt="解析">
+  <div style="text-align:center"><span class="point" id="aPoint"></span></div>
+  <div style="text-align:center;margin-top:16px"><button class="btn" onclick="next()">下一题 →</button></div>
+ </div>
+</div>
+<div id="result" class="hidden">
+ <div class="card" style="text-align:center">
+  <h2 class="res">🎉 闯关成功！</h2>
+  <div class="stat"><div><b id="rOk" style="color:#3cb371">0</b><div style="color:#888;font-size:13px">答对</div></div>
+  <div><b id="rBad" style="color:#e05252">0</b><div style="color:#888;font-size:13px">答错</div></div>
+  <div><b id="rRate">0%</b><div style="color:#888;font-size:13px">正确率</div></div></div>
+  <div class="coingift"><div class="big">🪙💰🪙</div><div>本次赢得</div>
+   <div class="num" id="rCoin">0</div><div style="font-size:15px;color:#a3860b">枚金币</div>
+   <div class="say">快去截图，找你的<b style="color:#e65100">练习课导老师</b><br>领取金币吧！🙌</div></div>
+  <div id="rStars" style="font-size:36px;margin:14px 0 4px"></div>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+   <button class="btn" onclick="start('wrong')">🔁 错题大作战</button>
+   <button class="btn ghost" onclick="goHome()">🏠 再来一轮</button></div>
+ </div>
+</div>
+<button class="home-ic hidden" id="homeIc" onclick="goHome()">🏠</button>
+<script>
+const QUIZ=[{"plate": "单选", "color": "AB47BC", "point": "坐标认读", "ans": "C", "q": "img/zz1_q.webp", "a": "img/zz1_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "将大小设为/增加", "ans": "A", "q": "img/zz2_q.webp", "a": "img/zz2_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "角色方向", "ans": "C", "q": "img/zz3_q.webp", "a": "img/zz3_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "简单变量计算", "ans": "D", "q": "img/zz4_q.webp", "a": "img/zz4_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "关系运算", "ans": "A", "q": "img/zz5_q.webp", "a": "img/zz5_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "坐标增加", "ans": "B", "q": "img/zz6_q.webp", "a": "img/zz6_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "克隆", "ans": "B", "q": "img/zz7_q.webp", "a": "img/zz7_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "随机运算", "ans": "D", "q": "img/zz8_q.webp", "a": "img/zz8_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "多层判断", "ans": "C", "q": "img/zz9_q.webp", "a": "img/zz9_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "单选", "color": "AB47BC", "point": "广播", "ans": "B", "q": "img/zz10_q.webp", "a": "img/zz10_a.webp", "opts": ["A", "B", "C", "D"]}, {"plate": "判断", "color": "7C3AED", "point": "认识坐标", "ans": 0, "q": "img/zz11_q.webp", "a": "img/zz11_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "将大小设为/增加", "ans": 0, "q": "img/zz12_q.webp", "a": "img/zz12_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "循环结构", "ans": 0, "q": "img/zz13_q.webp", "a": "img/zz13_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "广播", "ans": 0, "q": "img/zz14_q.webp", "a": "img/zz14_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "随机数", "ans": 0, "q": "img/zz15_q.webp", "a": "img/zz15_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "抬笔落笔", "ans": 0, "q": "img/zz16_q.webp", "a": "img/zz16_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "关系与逻辑运算", "ans": 0, "q": "img/zz17_q.webp", "a": "img/zz17_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "重复判断", "ans": 0, "q": "img/zz18_q.webp", "a": "img/zz18_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "画笔属性", "ans": 0, "q": "img/zz19_q.webp", "a": "img/zz19_a.webp", "opts": ["正确", "错误"]}, {"plate": "判断", "color": "7C3AED", "point": "克隆", "ans": 0, "q": "img/zz20_q.webp", "a": "img/zz20_a.webp", "opts": ["正确", "错误"]}];
+const SFX={"coin": "sfx/coin.mp3", "double": "sfx/double.mp3", "triple": "sfx/triple.mp3", "quadra": "sfx/quadra.mp3", "penta": "sfx/penta.mp3", "legendary": "sfx/legendary.mp3", "welcome": "sfx/welcome.mp3", "fail": "sfx/fail.mp3"};
+const KEY=robo_zz_v1;
+const GROUP=【RoboRAVE中级组刷题】;
+const PRAISE=["太棒啦！🌟","真聪明！🧠","哇，答对啦！🎉","厉害厉害！👍","稳稳拿下！💪"];
+const CHEER=["没关系，看完解析你就会啦！","错一题没关系，金币下次赚回来！"];
+let order=[],cur=0,ansMap={},coins=0,combo=0,snd=true;
+let wrong=new Set(JSON.parse(localStorage.getItem(KEY+".wrong")||"[]"));
+let kidName=localStorage.getItem(KEY+".name")||"";
+const HOOK="https://open.feishu.cn/open-apis/bot/v2/hook/210ddde5-3e30-40bf-a097-94cd1e7ea5c9";
+function saveWrong(){localStorage.setItem(KEY+".wrong",JSON.stringify([...wrong]))}
+function shuffled(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function start(mode){
+ if(mode==="wrong"){order=shuffled([...wrong]).slice(0,15);if(!order.length){alert("错题本是空的，太棒了！🎉");return}}
+ else order=shuffled([...QUIZ.keys()]).slice(0,15);
+ cur=0;ansMap={};coins=0;combo=0;document.getElementById("coinN").textContent="0";
+ show(["quiz"]);render();
+}
+function show(ids){for(const id of["home","quiz","ans","result"])document.getElementById(id).classList.toggle("hidden",!ids.includes(id));
+ document.getElementById("homeIc").classList.toggle("hidden",!ids.some(i=>i!=="home"))}
+function goHome(){show(["home"]);renderProg()}
+function render(){
+ const q=QUIZ[order[cur]];
+ const pEl=document.getElementById("pPlate");
+ pEl.textContent=q.plate;pEl.style.background="#"+q.color;
+ document.getElementById("pIdx").textContent=`第 ${cur+1} / ${order.length} 题`;
+ document.getElementById("qImg").src=q.q;
+ const opts=document.getElementById("opts");opts.innerHTML="";
+ q.opts.forEach((opt,li)=>{
+  const b=document.createElement("button");b.className="opt";b.textContent=opt;b.onclick=()=>pick(li,b);
+  if(ansMap[cur]!==undefined){b.disabled=true;
+   if(li===q.ans)b.classList.add("ok");else if(li===ansMap[cur])b.classList.add("bad")}
+  opts.appendChild(b);
+ });
+ const fb=document.getElementById("fb");
+ if(ansMap[cur]!==undefined){
+  const ok=ansMap[cur]===q.ans;
+  fb.className="fb "+(ok?"ok":"bad");
+  fb.innerHTML=ok?`${PRAISE[Math.floor(Math.random()*PRAISE.length)]}${combo>=3?`<span class="combo">🔥 连对 ${combo} 题！</span>`:""}<span style="float:right">答对 +3 金币</span>`
+   :`${CHEER[Math.floor(Math.random()*CHEER.length)]}<span style="float:right">正确答案：${q.opts[q.ans]}</span>`;
+  document.getElementById("acts").style.display="flex";
+ }else{fb.className="fb";document.getElementById("acts").style.display="none"}
+}
+function pick(li){
+ if(ansMap[cur]!==undefined)return;
+ const q=QUIZ[order[cur]];
+ ansMap[cur]=li;
+ const ok=li===q.ans;
+ if(ok){combo++;addCoins(3,document.getElementById("fb"));playSfx("coin");
+  if(combo>=2){playSfx({2:"double",3:"triple",4:"quadra",5:"penta",6:"legendary"}[Math.min(combo,6)])}
+ }else{combo=0;wrong.add(order[cur]);saveWrong();playSfx("fail")}
+ render();
+}
+function showAns(){
+ const q=QUIZ[order[cur]];
+ const pEl=document.getElementById("aPlate");
+ pEl.textContent=q.plate;pEl.style.background="#"+q.color;
+ document.getElementById("aIdx").textContent=`第 ${cur+1} / ${order.length} 题`;
+ document.getElementById("aImg").src=q.a;
+ document.getElementById("aPoint").textContent="🎯 考点："+q.point;
+ show(["ans"]);
+}
+function next(){
+ cur++;
+ if(cur>=order.length){result();return}
+ if(document.getElementById("quiz").classList.contains("hidden"))show(["quiz"]);
+ render();
+}
+function addCoins(n,anchor){
+ coins+=n;document.getElementById("coinN").textContent=coins;
+ const bar=document.getElementById("coinbar");bar.classList.remove("bump");void bar.offsetWidth;bar.classList.add("bump");
+ if(anchor){const f=document.createElement("div");f.className="coinfly";f.textContent="+"+n+" 🪙";
+  anchor.appendChild(f);setTimeout(()=>f.remove(),1200)}
+}
+let actx=null,sfxBuf={};
+function ac(){if(!actx){try{actx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}
+ if(actx&&actx.state==="suspended")try{actx.resume()}catch(e){}
+ return actx}
+function playSfx(name){
+ const c=ac();if(!c||!snd)return;
+ if(sfxBuf[name]){const s=c.createBufferSource();s.buffer=sfxBuf[name];s.connect(c.destination);s.start();return}
+ fetch(SFX[name]).then(r=>r.arrayBuffer()).then(ab=>c.decodeAudioData(ab)).then(buf=>{sfxBuf[name]=buf;
+  const s=c.createBufferSource();s.buffer=buf;s.connect(c.destination);s.start()}).catch(e=>{})
+}
+function confetti(){
+ const colors=["#FF7043","#FFA726","#66BB6A","#26A69A","#42A5F5","#AB47BC","#EC407A","#FFD54F"];
+ for(let i=0;i<46;i++){const c=document.createElement("div");c.className="confetti";
+  c.style.left=Math.random()*100+"vw";c.style.width=c.style.height=(6+Math.random()*8)+"px";
+  c.style.background=colors[Math.floor(Math.random()*colors.length)];
+  c.style.animationDuration=(2.2+Math.random()*2)+"s";c.style.animationDelay=Math.random()*.7+"s";
+  document.body.appendChild(c);setTimeout(()=>c.remove(),5200)}
+}
+function toggleSnd(){snd=!snd;document.getElementById("snd").textContent=snd?"🔊":"🔇"}
+function result(){
+ let ok=0,bad=0;
+ for(const k in ansMap){if(ansMap[k]===QUIZ[order[k]].ans)ok++;else bad++}
+ document.getElementById("rOk").textContent=ok;
+ document.getElementById("rBad").textContent=bad;
+ const rate=Math.round(ok/(ok+bad)*100)||0;
+ document.getElementById("rRate").textContent=rate+"%";
+ document.getElementById("rCoin").textContent=ok*3;
+ document.getElementById("rStars").textContent=rate>=90?"⭐⭐⭐⭐⭐":rate>=75?"⭐⭐⭐⭐":rate>=60?"⭐⭐⭐":rate>=40?"⭐⭐":"⭐";
+ show(["result"]);
+ if(ok>0){confetti();playSfx("legendary")}
+ sendFeishu(ok,ok+bad);
+}
+function sendFeishu(ok,total){
+ const st=document.getElementById("fbStatus");
+ if(!st)return;
+ const text=`${kidName||"未署名"}｜答对 ${ok}/${total}｜金币 +${ok*3}`;
+ st.style.display="block";st.style.background="#f0f4ff";st.style.color="#3355aa";
+ st.textContent="📤 正在把成绩发到老师群...";
+ fetch(HOOK,{method:"POST",headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({msg_type:"text",content:{text:GROUP+text}})})
+ .then(r=>r.json()).then(()=>{st.style.background="#e6f7e9";st.style.color="#1d7a44";
+  st.textContent="✅ 成绩已自动发到老师群： "+text})
+ .catch(()=>{st.style.background="#fff3e0";st.style.color="#a06000";
+  st.textContent="⚠️ 自动发送失败，请手动发给老师： "+text});
+}
+function renderName(){
+ const area=document.getElementById("nameArea");
+ if(kidName){area.innerHTML=`<span class="nametag" onclick="askName()">👋 ${kidName} · 点击改名</span>`}
+ else{area.innerHTML=`<input id="nameIn" placeholder="请输入孩子姓名" maxlength="10"><button onclick="saveName()">✔ 开始刷题</button>`}
+}
+function saveName(){
+ const v=document.getElementById("nameIn").value.trim();
+ if(!v){alert("先输入名字才能开始哦～");return}
+ kidName=v.slice(0,10);localStorage.setItem(KEY+".name",kidName);renderName();
+}
+function askName(){renderName();document.getElementById("nameIn").focus()}
+function renderProg(){
+ const total=QUIZ.length,w=wrong.size;
+ document.getElementById("prog").innerHTML=
+  `<div style="display:flex;gap:14px;flex-wrap:wrap;text-align:center">
+   <div style="flex:1;min-width:150px">📚 题库总量：<b>${total}</b> 题</div>
+   <div style="flex:1;min-width:150px">🔁 错题本：<b style="color:#e05252">${w}</b> 题</div>
+   <div style="flex:1;min-width:150px">✅ 已掌握：<b style="color:#3cb371">${total-w}</b> 题</div></div>`;
+}
+renderProg();renderName();
+</script></body></html>
