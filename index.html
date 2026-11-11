@@ -143,7 +143,7 @@ const CHEER=["没关系，看完解析你就会啦！","错一题没关系，金
 let order=[],cur=0,ansMap={},coins=0,combo=0,snd=true;
 let wrong=new Set(JSON.parse(localStorage.getItem(KEY+".wrong")||"[]"));
 let kidName=localStorage.getItem(KEY+".name")||"";
-const HOOK="https://open.feishu.cn/open-apis/bot/v2/hook/210ddde5-3e30-40bf-a097-94cd1e7ea5c9";
+const HOOK="https://open.feishu.cn/open-apis/bot/v2/hook/ea7ddefe-28c8-467a-b75e-c3ddf84aad2a";
 function saveWrong(){localStorage.setItem(KEY+".wrong",JSON.stringify([...wrong]))}
 function shuffled(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function start(mode){
